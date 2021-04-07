@@ -56,6 +56,7 @@ defmodule Soap.MixProject do
 
       # Code style
       {:credo, "~> 1.0", only: [:dev, :test]},
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
 
       # Docs
       {:ex_doc, "~>  0.19.3", only: [:dev, :docs], runtime: false},

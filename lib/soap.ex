@@ -88,7 +88,7 @@ defmodule Soap do
       iex> Soap.call(wsdl, action, params)
       {:ok, %Soap.Response{}}
   """
-  @spec call(wsdl :: map(), operation :: String.t(), params :: map(), headers :: any(), opts :: any()) :: any()
+  @spec call(wsdl :: map(), operation :: String.t(), params :: map(), headers :: any(), opts :: Keyword.t()) :: any()
   def call(wsdl, operation, params, headers \\ [], opts \\ []) do
     wsdl
     |> validate_operation(operation)

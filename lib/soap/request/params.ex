@@ -20,7 +20,7 @@ defmodule Soap.Request.Params do
   Returns xml-like string.
   """
 
-  @spec build_body(wsdl :: map(), operation :: String.t() | atom(), params :: map(), headers :: map()) :: String.t()
+  @spec build_body(wsdl :: map(), operation :: String.t() | atom(), params :: map(), headers :: any()) :: String.t()
   def build_body(wsdl, operation, params, headers) do
     with {:ok, body} <- build_soap_body(wsdl, operation, params),
          {:ok, header} <- build_soap_header(wsdl, operation, headers) do
@@ -228,7 +228,7 @@ defmodule Soap.Request.Params do
     end
   end
 
-  @spec get_header_with_namespace(wsdl :: map(), operation :: String.t()) :: String.t()
+  @spec get_header_with_namespace(wsdl :: map(), operation :: String.t()) :: String.t() | nil
   defp get_header_with_namespace(wsdl, operation) do
     with %{input: %{header: %{message: message, part: part}}} <-
            Enum.find(wsdl[:operations], &(&1[:name] == operation)),
@@ -279,7 +279,7 @@ defmodule Soap.Request.Params do
     [element(:"#{env_namespace()}:Envelope", envelop_attributes, body)]
   end
 
-  @spec build_soap_version_attribute(Map.t()) :: map()
+  @spec build_soap_version_attribute(map()) :: map()
   defp build_soap_version_attribute(wsdl) do
     soap_version = wsdl |> soap_version() |> to_string
     %{"xmlns:#{env_namespace()}" => @soap_version_namespaces[soap_version]}
